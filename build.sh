@@ -11,5 +11,6 @@ mkdir -p static
 # Collect static files
 python manage.py collectstatic --no-input
 
-# Run database migrations
-python manage.py migrate
+# Note: Migrations should be run manually after deployment on Vercel
+# python manage.py migrate
+

@@ -1,34 +1,23 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "news_aggregator/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
-      }
+    "version": 2,
+    "functions": {
+        "news_aggregator/wsgi.py": {
+            "maxDuration": 10,
+            "runtime": "python3.9"
+        }
     },
-    {
-      "src": "build.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "news_aggregator/wsgi.py"
+        }
+    ],
+    "env": {
+        "DEBUG": "False",
+        "ALLOWED_HOSTS": ".vercel.app"
     }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "news_aggregator/wsgi.py"
-    }
-  ],
-  "env": {
-    "DEBUG": "False",
-    "ALLOWED_HOSTS": ".vercel.app"
-  }
 }
