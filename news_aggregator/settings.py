@@ -129,8 +129,9 @@ STATIC_URL = '/static/'
 
 # Static files configuration
 if DEBUG:
-    # Development: use STATICFILES_DIRS
+    # Development: use STATICFILES_DIRS with STATIC_ROOT for collectstatic
     STATICFILES_DIRS = [BASE_DIR / 'static']
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 else:
     # Production: only use STATIC_ROOT
     STATIC_ROOT = BASE_DIR / 'staticfiles'
