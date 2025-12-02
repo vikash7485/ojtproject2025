@@ -18,8 +18,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
-# API Keys
-NEWSAPI_KEY = config('NEWSAPI_KEY')
+# API Keys - Allow deployment without API key (set in environment later)
+NEWSAPI_KEY = config('NEWSAPI_KEY', default='')
 
 
 # Application definition
@@ -121,9 +121,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+
+# Static files configuration
+if DEBUG:
+    # Development: use STATICFILES_DIRS
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+else:
+    # Production: only use STATIC_ROOT
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Whitenoise settings for production static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
