@@ -2,6 +2,10 @@ services:
   - type: web
     name: news-aggregator
     runtime: python
+    # Root directory should be left empty since manage.py is at repository root
+    # If you see "Service Root Directory is missing" error, check Render dashboard
+    # Settings and CLEAR the "Root Directory" field
+    rootDir: .
     buildCommand: "./build.sh"
     startCommand: "gunicorn news_aggregator.wsgi:application"
     envVars:
